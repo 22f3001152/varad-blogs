@@ -303,7 +303,7 @@ const HomePage = ({ data }) => {
 };
 
 export const query = graphql`
-  query {
+  query HomePageQuery {
     allMarkdownRemark(sort: { frontmatter: { date: DESC } }) {
       edges {
         node {

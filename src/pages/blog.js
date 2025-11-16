@@ -253,7 +253,7 @@ const BlogArchivePage = ({ data }) => {
 };
 
 export const query = graphql`
-  query {
+  query BlogArchiveQuery {
     allMarkdownRemark(sort: { frontmatter: { date: DESC } }) {
       edges {
         node {
