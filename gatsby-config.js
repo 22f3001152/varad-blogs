@@ -4,9 +4,9 @@ module.exports = {
   pathPrefix: '/blog-app',
   
   siteMetadata: {
-    title: 'AI Blog - Powered by Neural Networks',
-    description: 'An AI-powered blog about technology, machine learning, and the future of computing',
-    author: 'Your Name',
+    title: 'Varad Blogs',
+    description: 'A blog about technology, programming, and innovation',
+    author: 'Varad',
     siteUrl: 'https://yourusername.github.io',
   },
   plugins: [

@@ -1,35 +1,66 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { graphql, Link } from 'gatsby';
 import Layout from '../components/Layout';
 import HeroBanner from '../components/HeroBanner';
 import CardImage from '../components/CardImage';
-import { FaRocket, FaBrain, FaLightbulb, FaArrowRight, FaMicrochip, FaNetworkWired } from 'react-icons/fa';
+import { FaRocket, FaBrain, FaLightbulb, FaArrowRight, FaMicrochip, FaNetworkWired, FaChevronLeft, FaChevronRight, FaEllipsisH, FaBlog } from 'react-icons/fa';
 
 const HomePage = ({ data }) => {
-  const posts = data.allMarkdownRemark.edges;
+  const allPosts = data.allMarkdownRemark.edges;
+  const POSTS_PER_PAGE = 9; // 3 rows of 3 posts
+  const [currentPage, setCurrentPage] = useState(1);
+  
+  // Calculate pagination
+  const totalPosts = allPosts.length;
+  const totalPages = Math.ceil(totalPosts / POSTS_PER_PAGE);
+  const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
+  const endIndex = startIndex + POSTS_PER_PAGE;
+  const posts = allPosts.slice(startIndex, endIndex);
+  
+  // Pagination helper
+  const goToPage = (page) => {
+    setCurrentPage(page);
+    document.getElementById('blog-posts')?.scrollIntoView({ behavior: 'smooth' });
+  };
+  
+  // Generate page numbers to display
+  const getPageNumbers = () => {
+    const pages = [];
+    const maxVisible = 5;
+    
+    if (totalPages <= maxVisible) {
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(i);
+      }
+    } else {
+      if (currentPage <= 3) {
+        pages.push(1, 2, 3, 4, '...', totalPages);
+      } else if (currentPage >= totalPages - 2) {
+        pages.push(1, '...', totalPages - 3, totalPages - 2, totalPages - 1, totalPages);
+      } else {
+        pages.push(1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages);
+      }
+    }
+    
+    return pages;
+  };
 
   return (
-    <Layout title="AI Blog - Powered by Neural Networks">
+    <Layout title="Varad Blogs - Tech & Innovation">
       {/* Hero Section with Rotating Vibrant Images */}
       <HeroBanner>
         <div className="container mx-auto px-4 py-20 md:py-32">
           <div className="max-w-4xl mx-auto text-center text-white">
-            {/* Floating Badge */}
-            <div className="inline-flex items-center space-x-2 bg-white/20 backdrop-blur-md px-4 py-2 rounded-full mb-6 animate-pulse">
-              <FaMicrochip className="text-yellow-300" />
-              <span className="text-sm font-semibold">AI-Powered Content</span>
-            </div>
-
             <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
-              Welcome to the
+              Welcome to
               <span className="block mt-2 bg-clip-text text-transparent bg-gradient-to-r from-yellow-200 via-pink-200 to-purple-200">
-                Future of Blogging
+                Varad Blogs
               </span>
             </h1>
             
             <p className="text-xl md:text-2xl mb-8 text-purple-100 max-w-2xl mx-auto">
-              Explore cutting-edge insights on AI, technology, and innovation. 
-              Powered by neural networks and human creativity.
+              Explore insightful articles on technology, programming, and innovation. 
+              Sharing knowledge and ideas.
             </p>
 
             {/* CTA Buttons */}
@@ -38,29 +69,24 @@ const HomePage = ({ data }) => {
                 href="#blog-posts" 
                 className="group flex items-center space-x-2 bg-white text-purple-600 px-8 py-4 rounded-full font-bold text-lg hover:scale-105 transition-all duration-300 shadow-2xl hover:shadow-purple-300"
               >
-                <span>Explore Articles</span>
+                <span>Read Articles</span>
                 <FaRocket className="group-hover:translate-x-1 transition-transform" />
               </a>
-              
-              <button className="flex items-center space-x-2 bg-purple-600/30 backdrop-blur-md text-white px-8 py-4 rounded-full font-bold text-lg border-2 border-white/50 hover:bg-purple-600/50 transition-all duration-300">
-                <FaBrain />
-                <span>AI Features</span>
-              </button>
             </div>
 
             {/* Stats */}
             <div className="mt-16 grid grid-cols-3 gap-8 max-w-2xl mx-auto">
               <div className="text-center">
-                <div className="text-4xl font-bold mb-2">{posts.length}+</div>
-                <div className="text-sm text-purple-200">AI Articles</div>
+                <div className="text-4xl font-bold mb-2">{totalPosts}+</div>
+                <div className="text-sm text-purple-200">Articles</div>
               </div>
               <div className="text-center">
                 <div className="text-4xl font-bold mb-2">100%</div>
-                <div className="text-sm text-purple-200">Neural Powered</div>
+                <div className="text-sm text-purple-200">Quality Content</div>
               </div>
               <div className="text-center">
-                <div className="text-4xl font-bold mb-2">24/7</div>
-                <div className="text-sm text-purple-200">Learning Mode</div>
+                <div className="text-4xl font-bold mb-2">∞</div>
+                <div className="text-sm text-purple-200">Ideas Shared</div>
               </div>
             </div>
           </div>
@@ -81,32 +107,32 @@ const HomePage = ({ data }) => {
             <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full mb-4 group-hover:animate-bounce">
               <FaBrain className="text-3xl text-white" />
             </div>
-            <h3 className="text-xl font-bold mb-3 text-gray-100">AI-Driven Insights</h3>
-            <p className="text-gray-300">Harness the power of machine learning for deeper understanding</p>
+            <h3 className="text-xl font-bold mb-3 text-gray-100">Insightful Content</h3>
+            <p className="text-gray-300">Deep dive into technology topics with clear explanations</p>
           </div>
 
           <div className="ai-card p-8 text-center group hover:scale-105 transition-transform duration-300">
             <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-full mb-4 group-hover:animate-bounce">
               <FaNetworkWired className="text-3xl text-white" />
             </div>
-            <h3 className="text-xl font-bold mb-3 text-gray-100">Neural Networks</h3>
-            <p className="text-gray-300">Content powered by advanced neural network architectures</p>
+            <h3 className="text-xl font-bold mb-3 text-gray-100">Well Researched</h3>
+            <p className="text-gray-300">Every article backed by thorough research and experience</p>
           </div>
 
           <div className="ai-card p-8 text-center group hover:scale-105 transition-transform duration-300">
             <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-500 rounded-full mb-4 group-hover:animate-bounce">
               <FaLightbulb className="text-3xl text-white" />
             </div>
-            <h3 className="text-xl font-bold mb-3 text-gray-100">Innovation First</h3>
-            <p className="text-gray-300">Stay ahead with cutting-edge technology insights</p>
+            <h3 className="text-xl font-bold mb-3 text-gray-100">Practical Tips</h3>
+            <p className="text-gray-300">Real-world advice you can apply immediately</p>
           </div>
         </div>
 
         {/* Blog Posts Section */}
         <div id="blog-posts" className="scroll-mt-20">
           <div className="text-center mb-12">
-            <h2 className="text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-400">Latest AI Insights</h2>
-            <p className="text-xl text-gray-300">Discover groundbreaking perspectives on technology</p>
+            <h2 className="text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-400">Latest Articles</h2>
+            <p className="text-xl text-gray-300">Discover insights on technology and programming</p>
             <div className="w-24 h-1 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto mt-4 rounded-full"></div>
           </div>
 
@@ -125,7 +151,7 @@ const HomePage = ({ data }) => {
                   <article className="ai-card p-6 h-full flex flex-col hover:scale-105 transition-all duration-300">
                     {/* Category Badge */}
                     <div className="mb-4">
-                      <span className="ai-badge">AI Article</span>
+                      <span className="ai-badge">Article</span>
                     </div>
 
                     {/* Vibrant Image with Different Categories */}
@@ -158,6 +184,101 @@ const HomePage = ({ data }) => {
               );
             })}
           </div>
+
+          {/* Pagination Controls */}
+          {totalPages > 1 && (
+            <div className="mt-16 flex flex-col items-center space-y-6">
+              {/* Page Info */}
+              <div className="text-center">
+                <p className="text-gray-300 text-lg">
+                  Showing <span className="text-purple-400 font-semibold">{startIndex + 1}-{Math.min(endIndex, totalPosts)}</span> of <span className="text-purple-400 font-semibold">{totalPosts}</span> articles
+                </p>
+                <p className="text-gray-400 text-sm mt-1">Page {currentPage} of {totalPages}</p>
+              </div>
+
+              {/* Pagination Buttons */}
+              <div className="flex items-center space-x-2">
+                {/* Previous Button */}
+                <button
+                  onClick={() => goToPage(currentPage - 1)}
+                  disabled={currentPage === 1}
+                  className={`flex items-center space-x-2 px-4 py-2 rounded-lg font-semibold transition-all duration-300 ${
+                    currentPage === 1
+                      ? 'bg-gray-800 text-gray-600 cursor-not-allowed'
+                      : 'bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:scale-105 hover:shadow-lg'
+                  }`}
+                >
+                  <FaChevronLeft />
+                  <span className="hidden sm:inline">Previous</span>
+                </button>
+
+                {/* Page Numbers */}
+                <div className="flex items-center space-x-2">
+                  {getPageNumbers().map((page, index) => (
+                    page === '...' ? (
+                      <span key={`ellipsis-${index}`} className="px-3 py-2 text-gray-400">
+                        <FaEllipsisH />
+                      </span>
+                    ) : (
+                      <button
+                        key={page}
+                        onClick={() => goToPage(page)}
+                        className={`w-10 h-10 rounded-lg font-semibold transition-all duration-300 ${
+                          currentPage === page
+                            ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white scale-110 shadow-lg'
+                            : 'bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white hover:scale-105'
+                        }`}
+                      >
+                        {page}
+                      </button>
+                    )
+                  ))}
+                </div>
+
+                {/* Next Button */}
+                <button
+                  onClick={() => goToPage(currentPage + 1)}
+                  disabled={currentPage === totalPages}
+                  className={`flex items-center space-x-2 px-4 py-2 rounded-lg font-semibold transition-all duration-300 ${
+                    currentPage === totalPages
+                      ? 'bg-gray-800 text-gray-600 cursor-not-allowed'
+                      : 'bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:scale-105 hover:shadow-lg'
+                  }`}
+                >
+                  <span className="hidden sm:inline">Next</span>
+                  <FaChevronRight />
+                </button>
+              </div>
+
+              {/* Quick Jump */}
+              <div className="flex items-center space-x-3">
+                <span className="text-gray-400 text-sm">Jump to:</span>
+                <select
+                  value={currentPage}
+                  onChange={(e) => goToPage(Number(e.target.value))}
+                  className="bg-gray-800 text-white px-4 py-2 rounded-lg border border-purple-500/30 focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500/50 transition-all"
+                >
+                  {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                    <option key={page} value={page}>
+                      Page {page}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* View All Posts Link */}
+              <div className="mt-8">
+                <Link
+                  to="/blog"
+                  className="inline-flex items-center space-x-2 px-6 py-3 bg-gray-800 text-white rounded-lg font-semibold hover:bg-gradient-to-r hover:from-purple-600 hover:to-pink-600 transition-all duration-300 hover:scale-105"
+                >
+                  <FaBlog />
+                  <span>Browse All {totalPosts} Articles</span>
+                  <FaArrowRight />
+                </Link>
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
@@ -166,13 +287,13 @@ const HomePage = ({ data }) => {
         <div className="ai-gradient-bg opacity-90 py-20">
           <div className="container mx-auto px-4 text-center relative z-10">
             <h2 className="text-4xl font-bold text-white mb-4">
-              Ready to Dive Deeper?
+              Enjoy Reading?
             </h2>
             <p className="text-xl text-purple-100 mb-8 max-w-2xl mx-auto">
-              Join thousands exploring the intersection of AI and human creativity
+              Subscribe to get notified about new articles and updates
             </p>
             <button className="bg-white text-purple-600 px-8 py-4 rounded-full font-bold text-lg hover:scale-105 transition-all duration-300 shadow-2xl">
-              Start Your Journey
+              Get Updates
             </button>
           </div>
         </div>

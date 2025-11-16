@@ -6,8 +6,8 @@ const Layout = ({ children, title, description }) => {
   return (
     <>
       <Helmet>
-        <title>{title || 'AI Blog - Powered by Neural Networks'}</title>
-        <meta name="description" content={description || 'An AI-powered blog about technology, machine learning, and the future of computing'} />
+        <title>{title || 'Varad Blogs - Tech & Innovation'}</title>
+        <meta name="description" content={description || 'A blog about technology, programming, and innovation'} />
       </Helmet>
       <div className="min-h-screen neural-network-bg" style={{ background: 'linear-gradient(135deg, #0f1419 0%, #1a1f2e 100%)' }}>
         <Navbar />

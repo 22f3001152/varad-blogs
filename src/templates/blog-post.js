@@ -2,7 +2,7 @@ import React from 'react';
 import { graphql, Link } from 'gatsby';
 import Layout from '../components/Layout';
 import BannerImage from '../components/BannerImage';
-import { FaBrain, FaClock, FaUser, FaArrowLeft, FaRobot, FaMicrochip } from 'react-icons/fa';
+import { FaBrain, FaClock, FaUser, FaArrowLeft } from 'react-icons/fa';
 
 const BlogPost = ({ data }) => {
   const post = data.markdownRemark;
@@ -26,11 +26,7 @@ const BlogPost = ({ data }) => {
           <div className="flex items-center space-x-2 mb-4">
             <span className="bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-white text-sm font-semibold flex items-center">
               <FaBrain className="mr-2" />
-              AI Article
-            </span>
-            <span className="bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-white text-sm font-semibold flex items-center">
-              <FaMicrochip className="mr-2" />
-              Neural Powered
+              Article
             </span>
           </div>
 
@@ -50,13 +46,7 @@ const BlogPost = ({ data }) => {
           </div>
         </div>
 
-        {/* Decorative Elements */}
-        <div className="absolute top-10 right-10 opacity-20">
-          <FaRobot className="text-white text-9xl animate-pulse" />
-        </div>
-        <div className="absolute bottom-10 left-10 opacity-10">
-          <FaBrain className="text-white text-9xl" />
-        </div>
+
 
         {/* Wave Divider */}
         <div className="absolute bottom-0 left-0 right-0">
@@ -74,19 +64,19 @@ const BlogPost = ({ data }) => {
             <div className="ai-card p-6 sticky top-24">
               <div className="flex items-center space-x-2 mb-4">
                 <FaBrain className="text-2xl text-purple-400" />
-                <h3 className="font-bold text-gray-100">AI Insights</h3>
+                <h3 className="font-bold text-gray-100">Article Info</h3>
               </div>
               <p className="text-sm text-gray-300 mb-4">
-                Enhanced with neural network analysis.
+                Written by {post.frontmatter.author}
               </p>
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
-                  <span className="text-gray-400">Complexity:</span>
-                  <span className="font-semibold text-purple-400">Advanced</span>
+                  <span className="text-gray-400">Category:</span>
+                  <span className="font-semibold text-purple-400">Tech</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-400">AI Score:</span>
-                  <span className="font-semibold text-purple-400">95%</span>
+                  <span className="text-gray-400">Read Time:</span>
+                  <span className="font-semibold text-purple-400">5 min</span>
                 </div>
               </div>
             </div>
@@ -128,7 +118,7 @@ const BlogPost = ({ data }) => {
                     </div>
                     <div>
                       <div className="font-semibold text-gray-100">{post.frontmatter.author}</div>
-                      <div className="text-sm text-gray-400">AI Content Creator</div>
+                      <div className="text-sm text-gray-400">Content Creator</div>
                     </div>
                   </div>
                   
@@ -145,9 +135,9 @@ const BlogPost = ({ data }) => {
 
             {/* Related Topics */}
             <div className="mt-8 ai-card p-8">
-              <h3 className="text-2xl font-bold mb-6 text-gray-100">Related AI Topics</h3>
+              <h3 className="text-2xl font-bold mb-6 text-gray-100">Related Topics</h3>
               <div className="flex flex-wrap gap-3">
-                {['Machine Learning', 'Neural Networks', 'Deep Learning', 'AI Ethics', 'Robotics'].map((topic) => (
+                {['Programming', 'Web Development', 'Technology', 'Innovation', 'Software'].map((topic) => (
                   <span 
                     key={topic}
                     className="px-5 py-3 bg-gradient-to-r from-purple-500/20 to-pink-500/20 text-purple-300 border border-purple-500/30 rounded-full text-base font-semibold hover:scale-105 transition-transform cursor-pointer hover:bg-purple-500/30"

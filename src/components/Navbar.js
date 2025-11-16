@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'gatsby';
-import { FaBrain, FaRobot, FaHome, FaBlog, FaMicrochip } from 'react-icons/fa';
+import { FaHome, FaBlog, FaUser } from 'react-icons/fa';
+import Logo from './Logo';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -10,18 +11,8 @@ const Navbar = () => {
       <div className="container mx-auto px-4 py-4">
         <div className="flex justify-between items-center">
           {/* Logo with AI Theme */}
-          <Link to="/" className="flex items-center space-x-2 group">
-            <div className="relative">
-              <FaBrain className="text-3xl text-purple-400 animate-pulse" />
-              <div className="absolute -inset-1 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full blur opacity-40 group-hover:opacity-60 transition duration-300"></div>
-            </div>
-            <div>
-              <span className="text-2xl font-bold ai-text-gradient">AI Blog</span>
-              <div className="flex items-center space-x-1 text-xs text-purple-300">
-                <FaMicrochip className="text-xs" />
-                <span>Powered by Neural Networks</span>
-              </div>
-            </div>
+          <Link to="/" className="group">
+            <Logo className="transition-transform duration-300 group-hover:scale-105" />
           </Link>
 
           {/* Desktop Menu */}
@@ -35,19 +26,22 @@ const Navbar = () => {
             </Link>
             
             <Link 
-              to="/#blog-posts" 
+              to="/blog" 
               className="flex items-center space-x-2 px-4 py-2 rounded-full hover:bg-purple-500/20 transition-all duration-300 group"
             >
               <FaBlog className="text-purple-400 group-hover:scale-110 transition-transform" />
-              <span className="font-semibold text-gray-200 group-hover:text-purple-300">Blog Posts</span>
+              <span className="font-semibold text-gray-200 group-hover:text-purple-300">All Posts</span>
             </Link>
 
-            <div className="ml-4">
-              <button className="ai-button text-white flex items-center space-x-2 shadow-lg">
-                <FaRobot />
-                <span>AI Powered</span>
-              </button>
-            </div>
+            <Link 
+              to="/about" 
+              className="flex items-center space-x-2 px-4 py-2 rounded-full hover:bg-purple-500/20 transition-all duration-300 group"
+            >
+              <FaUser className="text-purple-400 group-hover:scale-110 transition-transform" />
+              <span className="font-semibold text-gray-200 group-hover:text-purple-300">About</span>
+            </Link>
+
+
           </div>
 
           {/* Mobile Menu Button */}
@@ -78,20 +72,24 @@ const Navbar = () => {
             </Link>
             
             <Link 
-              to="/#blog-posts" 
+              to="/blog" 
               className="flex items-center space-x-2 px-4 py-3 rounded-lg hover:bg-purple-500/20 transition-all duration-300"
               onClick={() => setIsOpen(false)}
             >
               <FaBlog className="text-purple-400" />
-              <span className="font-semibold text-gray-200">Blog Posts</span>
+              <span className="font-semibold text-gray-200">All Posts</span>
             </Link>
 
-            <div className="px-4 pt-2">
-              <div className="ai-button text-white flex items-center justify-center space-x-2 w-full shadow-lg">
-                <FaRobot />
-                <span>AI Powered</span>
-              </div>
-            </div>
+            <Link 
+              to="/about" 
+              className="flex items-center space-x-2 px-4 py-3 rounded-lg hover:bg-purple-500/20 transition-all duration-300"
+              onClick={() => setIsOpen(false)}
+            >
+              <FaUser className="text-purple-400" />
+              <span className="font-semibold text-gray-200">About</span>
+            </Link>
+
+
           </div>
         )}
       </div>
