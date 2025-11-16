@@ -8,7 +8,7 @@ const NotFoundPage = () => {
   useEffect(() => {
     // Handle client-side routing for GitHub Pages
     const path = window.location.pathname;
-    const pathPrefix = '/blog-app';
+    const pathPrefix = '/varad-blogs';
     
     // Remove pathPrefix and check if it's a valid route
     const cleanPath = path.replace(pathPrefix, '');

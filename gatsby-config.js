@@ -1,7 +1,7 @@
 module.exports = {
   // Set pathPrefix for GitHub Pages deployment
-  // Change 'blog-app' to your repository name
-  pathPrefix: '/blog-app',
+  // Change to match your repository name
+  pathPrefix: '/varad-blogs',
   
   siteMetadata: {
     title: 'Varad Blogs',
