@@ -4,9 +4,8 @@
   "description": "A blog application built with React and Gatsby",
   "scripts": {
     "develop": "gatsby develop",
-    "start": "gatsby develop",
     "build": "gatsby build --prefix-paths",
-    "serve": "gatsby serve",
+    "dev": "gatsby serve",
     "clean": "gatsby clean",
     "deploy": "gatsby build --prefix-paths && gh-pages -d public"
   },
@@ -33,5 +32,13 @@
   },
   "devDependencies": {
     "gh-pages": "^6.3.0"
+  },
+  "overrides": {
+    "react-server-dom-webpack": {
+      "react": "$react",
+      "react-dom": "$react-dom"
+    },
+    "cookie": "^0.7.2",
+    "tmp": "^0.2.5"
   }
 }

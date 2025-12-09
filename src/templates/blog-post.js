@@ -1,11 +1,13 @@
 import React from 'react';
 import { graphql, Link } from 'gatsby';
+import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import Layout from '../components/Layout';
 import BannerImage from '../components/BannerImage';
 import { FaBrain, FaClock, FaUser, FaArrowLeft } from 'react-icons/fa';
 
 const BlogPost = ({ data }) => {
   const post = data.markdownRemark;
+  const bannerImage = getImage(post.frontmatter.banner);
 
   return (
     <Layout title={post.frontmatter.title} description={post.excerpt}>
@@ -87,18 +89,27 @@ const BlogPost = ({ data }) => {
             <div className="ai-card p-10 md:p-16">
               {/* Featured Image - Vibrant and Large */}
               <div className="relative h-72 md:h-[500px] rounded-2xl mb-10 overflow-hidden">
-                <div 
-                  className="absolute inset-0 bg-cover bg-center"
-                  style={{
-                    backgroundImage: `url('https://source.unsplash.com/1600x900/?${
-                      post.frontmatter.title.toLowerCase().includes('javascript') ? 'coding,programming,developer' :
-                      post.frontmatter.title.toLowerCase().includes('react') ? 'technology,innovation,web' :
-                      post.frontmatter.title.toLowerCase().includes('ai') ? 'artificial-intelligence,robot,future' :
-                      post.frontmatter.title.toLowerCase().includes('web') ? 'web-development,design,creative' :
-                      'technology,people,innovation'
-                    }')`,
-                  }}
-                />
+                {bannerImage ? (
+                  <GatsbyImage
+                    image={bannerImage}
+                    alt={post.frontmatter.title}
+                    className="absolute inset-0 w-full h-full"
+                    style={{ position: "absolute" }}
+                  />
+                ) : (
+                  <div 
+                    className="absolute inset-0 bg-cover bg-center"
+                    style={{
+                      backgroundImage: `url('https://source.unsplash.com/1600x900/?${
+                        post.frontmatter.title.toLowerCase().includes('javascript') ? 'coding,programming,developer' :
+                        post.frontmatter.title.toLowerCase().includes('react') ? 'technology,innovation,web' :
+                        post.frontmatter.title.toLowerCase().includes('ai') ? 'artificial-intelligence,robot,future' :
+                        post.frontmatter.title.toLowerCase().includes('web') ? 'web-development,design,creative' :
+                        'technology,people,innovation'
+                      }')`,
+                    }}
+                  />
+                )}
                 {/* Subtle Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-transparent to-blue-900/20"></div>
               </div>
@@ -161,6 +172,11 @@ export const query = graphql`
         title
         date(formatString: "MMMM DD, YYYY")
         author
+        banner {
+          childImageSharp {
+            gatsbyImageData(layout: FULL_WIDTH, placeholder: BLURRED)
+          }
+        }
       }
       html
       excerpt
